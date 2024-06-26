@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
+'use client';
 
-import { LottieAnimation } from "@/components/animations";
-import { InputFile } from "@/components/input";
-import { ChangeEvent, useRef, useState } from "react";
+import { LottieAnimation } from '@/components/animations';
+import { InputFile } from '@/components/input';
+import { ChangeEvent, useRef, useState } from 'react';
 
 export default function List() {
   const [animationData, setAnimationData] = useState<any>(null);
@@ -30,22 +30,25 @@ export default function List() {
         <div className='h-screen w-full'>
           <form>
             {!animationData && (
-              <InputFile handleFileChange={handleFileChange} inputRef={inputFileRef} />
+              <InputFile
+                handleFileChange={handleFileChange}
+                inputRef={inputFileRef}
+              />
             )}
             {animationData && (
-              <div className="relative flex items-center justify-center w-full h-64 mt-4">
+              <div className='relative mt-4 flex h-64 w-full items-center justify-center'>
                 <LottieAnimation animationData={animationData} />
-                <div className="absolute bottom-4 flex space-x-2">
-                  <button className='btn btn-danger' onClick={() => setAnimationData(null)}>
+                <div className='absolute bottom-4 flex space-x-2'>
+                  <button
+                    className='btn btn-danger'
+                    onClick={() => setAnimationData(null)}
+                  >
                     Remove
                   </button>
                 </div>
               </div>
             )}
-            <button
-              type='submit'
-              className='btn btn-primary mt-4'
-            >
+            <button type='submit' className='btn btn-primary mt-4'>
               Submit
             </button>
           </form>

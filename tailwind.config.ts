@@ -1,4 +1,4 @@
-import { PluginAPI } from "tailwindcss/types/config";
+import { PluginAPI } from 'tailwindcss/types/config';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -70,7 +70,7 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addComponents }: PluginAPI) {
+    function ({ addComponents }: PluginAPI) {
       addComponents({
         '.btn': {
           display: 'inline-block',
@@ -83,7 +83,8 @@ module.exports = {
           fontSize: '1rem',
           lineHeight: '1.5',
           borderRadius: '.25rem',
-          transition: 'color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out',
+          transition:
+            'color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out',
         },
         '.btn-primary': {
           color: '#fff',

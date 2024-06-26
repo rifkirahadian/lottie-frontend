@@ -5,7 +5,10 @@ interface InputFileProps {
   inputRef?: RefObject<HTMLInputElement>;
 }
 
-export const InputFile: React.FC<InputFileProps> = ({ handleFileChange, inputRef }) => {
+export const InputFile: React.FC<InputFileProps> = ({
+  handleFileChange,
+  inputRef,
+}) => {
   return (
     <div className='flex w-full items-center justify-center'>
       <label
@@ -29,7 +32,8 @@ export const InputFile: React.FC<InputFileProps> = ({ handleFileChange, inputRef
             />
           </svg>
           <p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
-            <span className='font-semibold'>Click to upload</span> or drag and drop
+            <span className='font-semibold'>Click to upload</span> or drag and
+            drop
           </p>
           <p className='text-xs text-gray-500 dark:text-gray-400'>
             LottieFiles (.json)
@@ -41,7 +45,7 @@ export const InputFile: React.FC<InputFileProps> = ({ handleFileChange, inputRef
           ref={inputRef}
           className='hidden'
           onChange={handleFileChange}
-          accept="application/json"
+          accept='application/json'
         />
       </label>
     </div>
