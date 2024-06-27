@@ -3,11 +3,20 @@
 
 import { LottieAnimation } from '@/components/animations';
 import { InputFile } from '@/components/input';
-import { ChangeEvent, useRef, useState } from 'react';
+import { CREATE_FILE_MUTATION } from '@/services/graphql';
+import { validateLottieJson } from '@/validates';
+import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 
 export default function List() {
+  const router = useRouter();
   const [animationData, setAnimationData] = useState<any>(null);
+  const [filename, setFilename] = useState<string | null>(null);
+  const [filesize, setFilesize] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const [createFile] = useMutation(CREATE_FILE_MUTATION);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -16,19 +25,49 @@ export default function List() {
         const reader = new FileReader();
         reader.onload = () => {
           const result = reader.result as string;
-          setAnimationData(JSON.parse(result));
+          try {
+            const data = JSON.parse(result);
+
+            const isLottie = validateLottieJson(data);
+            if (!isLottie) {
+              setError('Invalid Lottie Animation')
+              return;
+            }
+            setError(null)
+            setAnimationData(data);
+            setFilename(file.name);
+            setFilesize(file.size);
+          } catch (error) {
+            setError('Invalid Lottie Animation')
+          }
         };
         reader.readAsText(file);
       }
     }
   };
 
+  const onCreate = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await createFile({
+      variables: {
+        createFileInput: {
+          name: filename,
+          file: JSON.stringify(animationData),
+          size: filesize,
+        },
+      },
+    });
+
+    router.push('/')
+  };
+
   return (
     <>
       <div className='container mx-auto px-4 text-black'>
-        <h1>Add Animation</h1>
+        <h1 className='mt-3 mb-3'>Add Animation</h1>
         <div className='h-screen w-full'>
-          <form>
+          <form onSubmit={onCreate}>
+            {error && <p className="text-red-500">{error}</p>}
             {!animationData && (
               <InputFile
                 handleFileChange={handleFileChange}

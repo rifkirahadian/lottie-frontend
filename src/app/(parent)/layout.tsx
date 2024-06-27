@@ -1,7 +1,9 @@
 'use client';
 
 import { Props } from '@/types';
+import { ApolloProvider } from '@apollo/client';
 import Link from 'next/link';
+import client from '../../../lib/apolloClient';
 
 export default function Layout({ children }: Props) {
   return (
@@ -11,7 +13,7 @@ export default function Layout({ children }: Props) {
           <div className='flex h-full items-center justify-between'>
             <ul className='hidden gap-x-6 text-white md:flex'>
               <li>
-                <Link href='/list'>
+                <Link href='/'>
                   <p>List</p>
                 </Link>
               </li>
@@ -24,7 +26,9 @@ export default function Layout({ children }: Props) {
           </div>
         </div>
       </div>
-      <div>{children}</div>
+      <ApolloProvider client={client}>
+        <div>{children}</div>
+      </ApolloProvider>
     </div>
   );
 }
