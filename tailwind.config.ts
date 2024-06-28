@@ -118,9 +118,9 @@ module.exports = {
           'text-align': 'left',
           'font-size': '0.875rem', // text-sm
           'font-weight': '300', // font-light
-          'color': '#6c757d', // text-surface, customize as needed
+          color: '#6c757d', // text-surface, customize as needed
           '.dark &': {
-            'color': '#ffffff', // dark:text-white
+            color: '#ffffff', // dark:text-white
           },
         },
         '.table-default thead': {
@@ -131,7 +131,7 @@ module.exports = {
           },
         },
         '.table-default th': {
-          'padding': '0.75rem 1.5rem', // px-6 py-4
+          padding: '0.75rem 1.5rem', // px-6 py-4
         },
         '.table-default tbody tr': {
           'border-bottom': '1px solid #dee2e6', // border-neutral-200
@@ -140,7 +140,7 @@ module.exports = {
           },
         },
         '.table-default td': {
-          'padding': '0.75rem 1.5rem', // px-6 py-4
+          padding: '0.75rem 1.5rem', // px-6 py-4
           'white-space': 'nowrap', // whitespace-nowrap
         },
         '.table-default td.font-medium': {

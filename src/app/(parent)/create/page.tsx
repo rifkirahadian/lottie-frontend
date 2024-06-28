@@ -30,15 +30,15 @@ export default function List() {
 
             const isLottie = validateLottieJson(data);
             if (!isLottie) {
-              setError('Invalid Lottie Animation')
+              setError('Invalid Lottie Animation');
               return;
             }
-            setError(null)
+            setError(null);
             setAnimationData(data);
             setFilename(file.name);
             setFilesize(file.size);
           } catch (error) {
-            setError('Invalid Lottie Animation')
+            setError('Invalid Lottie Animation');
           }
         };
         reader.readAsText(file);
@@ -58,16 +58,16 @@ export default function List() {
       },
     });
 
-    router.push('/')
+    router.push('/');
   };
 
   return (
     <>
       <div className='container mx-auto px-4 text-black'>
-        <h1 className='mt-3 mb-3'>Add Animation</h1>
+        <h1 className='mb-3 mt-3'>Add Animation</h1>
         <div className='h-screen w-full'>
           <form onSubmit={onCreate}>
-            {error && <p className="text-red-500">{error}</p>}
+            {error && <p className='text-red-500'>{error}</p>}
             {!animationData && (
               <InputFile
                 handleFileChange={handleFileChange}

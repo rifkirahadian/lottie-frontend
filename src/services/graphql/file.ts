@@ -21,3 +21,15 @@ export const FIND_ALL_FILES_QUERY = gql`
     }
   }
 `;
+
+export const FIND_ONE_FILE_QUERY = (id: string | string[]) => gql`
+  query {
+    findOne(id: ${id}) {
+      id
+      name
+      size
+      file
+      createdAt
+    }
+  }
+`;
