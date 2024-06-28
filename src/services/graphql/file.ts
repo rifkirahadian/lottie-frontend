@@ -9,3 +9,15 @@ export const CREATE_FILE_MUTATION = gql`
     }
   }
 `;
+
+export const FIND_ALL_FILES_QUERY = gql`
+  query {
+    findAll {
+      id
+      name
+      size
+      createdAt
+      updatedAt
+    }
+  }
+`;

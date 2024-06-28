@@ -1,15 +1,29 @@
-export const AnimationList = () => {
+import { Animation } from "@/types";
+
+export const AnimationList = ({ data }: { data: Animation[] }) => {
   return (
     <div className='relative overflow-x-auto'>
-      <table className='w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400'>
-        <thead className='bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400'>
+      <table className="table-default">
+        <thead>
           <tr>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Year</th>
+            <th scope="col" className="px-6 py-4">No</th>
+            <th scope="col" className="px-6 py-4">Filename</th>
+            <th scope="col" className="px-6 py-4">Size</th>
+            <th scope="col" className="px-6 py-4">Created At</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {data.map((item, key) => {
+            return (
+              <tr key={key}>
+                <td className="whitespace-nowrap px-6 py-4"> {key+1} </td>
+                <td className="whitespace-nowrap px-6 py-4"> {item.name} </td>
+                <td className="whitespace-nowrap px-6 py-4"> {Math.ceil(item.size / 1024)} KB </td>
+                <td className="whitespace-nowrap px-6 py-4"> {item.createdAt} </td>
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
     </div>
   );

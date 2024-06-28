@@ -113,6 +113,39 @@ module.exports = {
             borderColor: '#bd2130',
           },
         },
+        '.table-default': {
+          'min-width': '100%',
+          'text-align': 'left',
+          'font-size': '0.875rem', // text-sm
+          'font-weight': '300', // font-light
+          'color': '#6c757d', // text-surface, customize as needed
+          '.dark &': {
+            'color': '#ffffff', // dark:text-white
+          },
+        },
+        '.table-default thead': {
+          'border-bottom': '1px solid #dee2e6', // border-neutral-200
+          'font-weight': '500', // font-medium
+          '.dark &': {
+            'border-bottom': '1px solid rgba(255, 255, 255, 0.1)', // dark:border-white/10
+          },
+        },
+        '.table-default th': {
+          'padding': '0.75rem 1.5rem', // px-6 py-4
+        },
+        '.table-default tbody tr': {
+          'border-bottom': '1px solid #dee2e6', // border-neutral-200
+          '.dark &': {
+            'border-bottom': '1px solid rgba(255, 255, 255, 0.1)', // dark:border-white/10
+          },
+        },
+        '.table-default td': {
+          'padding': '0.75rem 1.5rem', // px-6 py-4
+          'white-space': 'nowrap', // whitespace-nowrap
+        },
+        '.table-default td.font-medium': {
+          'font-weight': '500', // font-medium
+        },
       });
     },
   ],

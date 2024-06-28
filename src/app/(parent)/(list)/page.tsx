@@ -1,12 +1,21 @@
+'use client'
+
 import { AnimationList } from '@/components/animations';
+import { FIND_ALL_FILES_QUERY } from '@/services/graphql';
+import { useQuery } from '@apollo/client';
 
 export default function List() {
+  const { loading, data } = useQuery(FIND_ALL_FILES_QUERY);
+  
   return (
     <>
       <div className='container mx-auto px-4 text-black'>
-        <h1>Animation List</h1>
+        <h1 className='mt-3 mb-3'>Animation List</h1>
         <div className='h-screen w-full'>
-          <AnimationList />
+          {!loading && data && (
+            <AnimationList data={data.findAll} />
+          )}
+          
         </div>
       </div>
     </>
