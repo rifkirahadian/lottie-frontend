@@ -3,10 +3,11 @@
 import { LottieAnimation } from '@/components/animations';
 import { FIND_ONE_FILE_QUERY } from '@/services/graphql';
 import { Animation } from '@/types';
+import { downloadJsonFile } from '@/utils';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'next/navigation';
 
-export default function List() {
+export default function Preview() {
   const { id } = useParams();
   const { loading, data } = useQuery<{ findOne: Animation }>(
     FIND_ONE_FILE_QUERY(id)
@@ -32,6 +33,16 @@ export default function List() {
                   <li className='w-full border-b border-gray-200 px-4 py-2'>{`${data ? Math.ceil(data?.findOne.size / 1024) : 0} KB`}</li>
                   <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
                     {data?.findOne.createdAt}
+                  </li>
+                  <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
+                    <button
+                      className='btn btn-primary'
+                      onClick={() =>
+                        downloadJsonFile(data.findOne.file, data.findOne.name)
+                      }
+                    >
+                      Download
+                    </button>
                   </li>
                 </ul>
               </div>
