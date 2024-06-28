@@ -1,0 +1,21 @@
+{
+  "name": "Lottie Animation",
+  "short_name": "LottieAnimation",
+  "description": "Lottie Animation Management System",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "271x251",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "271x251",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "display": "standalone"
+}
