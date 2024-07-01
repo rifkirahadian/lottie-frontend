@@ -1,11 +1,11 @@
-import { Animation } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { Animation } from '@/types';
+import { createSlice } from '@reduxjs/toolkit';
 
 type CreateAnimationState = {
   animationData: string | null;
   filesize: string | null;
   filename: string | null;
-  error: string | null
+  error: string | null;
 };
 
 type AnimationState = {
@@ -13,7 +13,7 @@ type AnimationState = {
   animations: Animation[];
   sort: string;
   search: string;
-  createAnimation: CreateAnimationState
+  createAnimation: CreateAnimationState;
 };
 
 const initialState: AnimationState = {
@@ -26,11 +26,11 @@ const initialState: AnimationState = {
     filesize: null,
     filename: null,
     error: null,
-  }
+  },
 };
 
 export const animation = createSlice({
-  name: "animation",
+  name: 'animation',
   initialState,
   reducers: {
     setAnimations: (state, action) => {
@@ -51,5 +51,11 @@ export const animation = createSlice({
   },
 });
 
-export const { setAnimations, setSort, setSearch, setCreateAnimation, setAnimation } = animation.actions;
+export const {
+  setAnimations,
+  setSort,
+  setSearch,
+  setCreateAnimation,
+  setAnimation,
+} = animation.actions;
 export default animation.reducer;

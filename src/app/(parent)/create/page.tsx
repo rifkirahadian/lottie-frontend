@@ -13,7 +13,9 @@ import { setCreateAnimation } from '@/stores/features/animations/animationSlice'
 
 export default function List() {
   const router = useRouter();
-  const createAnimation = useSelector((state: RootState) => state.animationReducer.createAnimation);
+  const createAnimation = useSelector(
+    (state: RootState) => state.animationReducer.createAnimation
+  );
   const { animationData, filename, filesize, error } = createAnimation;
   const dispatch = useDispatch<AppDispatch>();
 
@@ -32,23 +34,29 @@ export default function List() {
 
             const isLottie = validateLottieJson(data);
             if (!isLottie) {
-              dispatch(setCreateAnimation({
-                ...createAnimation,
-                error: 'Invalid Lottie Animation'
-              }));
+              dispatch(
+                setCreateAnimation({
+                  ...createAnimation,
+                  error: 'Invalid Lottie Animation',
+                })
+              );
               return;
             }
-            dispatch(setCreateAnimation({
-              animationData: JSON.stringify(data),
-              filename: file.name,
-              filesize: file.size,
-              error: null
-            }));
+            dispatch(
+              setCreateAnimation({
+                animationData: JSON.stringify(data),
+                filename: file.name,
+                filesize: file.size,
+                error: null,
+              })
+            );
           } catch (error) {
-            dispatch(setCreateAnimation({
-              ...createAnimation,
-              error: 'Invalid Lottie Animation'
-            }));
+            dispatch(
+              setCreateAnimation({
+                ...createAnimation,
+                error: 'Invalid Lottie Animation',
+              })
+            );
           }
         };
         reader.readAsText(file);
@@ -95,10 +103,14 @@ export default function List() {
                 <div className='absolute bottom-4 flex space-x-2'>
                   <button
                     className='btn btn-danger'
-                    onClick={() => dispatch(setCreateAnimation({
-                      ...createAnimation,
-                      animationData: null,
-                    }))}
+                    onClick={() =>
+                      dispatch(
+                        setCreateAnimation({
+                          ...createAnimation,
+                          animationData: null,
+                        })
+                      )
+                    }
                   >
                     Remove
                   </button>

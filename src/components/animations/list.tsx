@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/stores/store';
 
 export const AnimationList = () => {
-  const data = useSelector((state: RootState) => state.animationReducer.animations);
+  const data = useSelector(
+    (state: RootState) => state.animationReducer.animations
+  );
 
   return (
     <div className='relative overflow-x-auto'>

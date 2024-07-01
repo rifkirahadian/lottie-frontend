@@ -10,7 +10,10 @@ export const CREATE_FILE_MUTATION = gql`
   }
 `;
 
-export const FIND_ALL_FILES_QUERY = (search: string | null = null, sort: string | null = null) => {
+export const FIND_ALL_FILES_QUERY = (
+  search: string | null = null,
+  sort: string | null = null
+) => {
   const params: string[] = [];
   if (search) {
     params.push(`search: "${search}"`);

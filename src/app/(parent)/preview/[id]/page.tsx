@@ -14,15 +14,17 @@ import { AppDispatch } from '@/stores/store';
 export default function Preview() {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, data, error } = useQuery<{ findOne: Animation }>(FIND_ONE_FILE_QUERY(id));
+  const { loading, data, error } = useQuery<{ findOne: Animation }>(
+    FIND_ONE_FILE_QUERY(id)
+  );
 
-  const loadOfflineAnimation = async() => {
+  const loadOfflineAnimation = async () => {
     const offlineAnimation = await getAnimationById(id.toString());
     if (offlineAnimation) {
       dispatch(setAnimation(offlineAnimation));
     }
-  }
-  
+  };
+
   useEffect(() => {
     if (error) {
       loadOfflineAnimation();

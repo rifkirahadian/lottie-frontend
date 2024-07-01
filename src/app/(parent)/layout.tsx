@@ -4,8 +4,27 @@ import { Props } from '@/types';
 import { ApolloProvider } from '@apollo/client';
 import Link from 'next/link';
 import client from '../../../lib/apolloClient';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Layout({ children }: Props) {
+  const pathname = usePathname();
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then((registration) => {
+          console.log(
+            'Service Worker registration successful with scope: ',
+            registration.scope
+          );
+        })
+        .catch((error) => {
+          console.log('Service Worker registration failed: ', error);
+        });
+    }
+  }, [pathname]);
+
   return (
     <div className='bg-white'>
       <div className='top-0 h-20 w-full bg-emerald-800'>

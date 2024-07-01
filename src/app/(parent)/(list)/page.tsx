@@ -1,6 +1,10 @@
 'use client';
 
-import { AnimationList, AnimationSearch, AnimationSort } from '@/components/animations';
+import {
+  AnimationList,
+  AnimationSearch,
+  AnimationSort,
+} from '@/components/animations';
 import { FIND_ALL_FILES_QUERY } from '@/services/graphql';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
@@ -11,15 +15,19 @@ import { setAnimations } from '@/stores/features/animations/animationSlice';
 
 export default function List() {
   const dispatch = useDispatch<AppDispatch>();
-  const { sort, search, animations } = useSelector((state: RootState) => state.animationReducer);
-  const { loading, data, error, refetch } = useQuery(FIND_ALL_FILES_QUERY(search, sort));
+  const { sort, search, animations } = useSelector(
+    (state: RootState) => state.animationReducer
+  );
+  const { loading, data, error, refetch } = useQuery(
+    FIND_ALL_FILES_QUERY(search, sort)
+  );
 
-  const loadOfflineAnimations = async() => {
+  const loadOfflineAnimations = async () => {
     const offlineAnimations = await getAllAnimations();
     if (offlineAnimations.length > 0) {
       dispatch(setAnimations(offlineAnimations));
     }
-  }
+  };
 
   useEffect(() => {
     if (data) {
@@ -47,7 +55,7 @@ export default function List() {
         <div className='h-screen w-full'>
           {!loading && (
             <>
-              <div className="grid grid-rows-1 grid-flow-col gap-4">
+              <div className='grid grid-flow-col grid-rows-1 gap-4'>
                 <div>
                   <AnimationSearch />
                 </div>

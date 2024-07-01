@@ -4,13 +4,8 @@
   "description": "Lottie Animation Management System",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
-      "sizes": "271x251",
-      "type": "image/png"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
-      "sizes": "271x251",
+      "src": "/icons/screenshoot.png",
+      "sizes": "800x800",
       "type": "image/png"
     }
   ],
@@ -20,16 +15,10 @@
   "display": "standalone",
   "screenshots": [
     {
-      "src": "/icons/icon-512x512.png",
-      "sizes": "271x251",
+      "src": "/icons/screenshoot.png",
+      "sizes": "800x800",
       "type": "image/png",
       "form_factor": "wide"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
-      "sizes": "271x251",
-      "type": "image/png",
-      "form_factor": "narrow"
     }
   ]
 }
