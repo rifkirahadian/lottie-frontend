@@ -1,23 +1,25 @@
 'use client';
 
-import { LottieAnimation } from '@/components/animations';
+import { AnimationDetail } from '@/components/animations';
 import { FIND_ONE_FILE_QUERY } from '@/services/graphql';
 import { Animation } from '@/types';
-import { downloadJsonFile } from '@/utils';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getAnimationById, saveAnimation } from '@/services/indexdb';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../../lib/store';
+import { setAnimation } from '../../../../../lib/features/animations/animationSlice';
 
 export default function Preview() {
   const { id } = useParams();
-  const [animation, setAnimation] = useState<Animation | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
   const { loading, data, error } = useQuery<{ findOne: Animation }>(FIND_ONE_FILE_QUERY(id));
 
   const loadOfflineAnimation = async() => {
     const offlineAnimation = await getAnimationById(id.toString());
     if (offlineAnimation) {
-      setAnimation(offlineAnimation);
+      dispatch(setAnimation(offlineAnimation));
     }
   }
   
@@ -29,8 +31,8 @@ export default function Preview() {
 
   useEffect(() => {
     if (data && !loading) {
-      setAnimation(data.findOne);
-      saveAnimation(data.findOne); // Save to IndexedDB
+      dispatch(setAnimation(data.findOne));
+      saveAnimation(data.findOne);
     }
   }, [data, loading]);
 
@@ -39,36 +41,7 @@ export default function Preview() {
       <div className='container mx-auto px-4 text-black'>
         <h1 className='mb-3 mt-3'>Animation Detail</h1>
         <div className='h-screen w-full'>
-          {animation && (
-            <div className='grid grid-cols-3 gap-4'>
-              <div>
-                <LottieAnimation
-                  animationData={JSON.parse(animation.file)}
-                />
-              </div>
-              <div>
-                <ul className='font-medium rounded-lg border-gray-200 text-sm'>
-                  <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
-                    {animation.name}
-                  </li>
-                  <li className='w-full border-b border-gray-200 px-4 py-2'>{`${Math.ceil(animation.size / 1024)} KB`}</li>
-                  <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
-                    {animation.createdAt}
-                  </li>
-                  <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
-                    <button
-                      className='btn btn-primary'
-                      onClick={() =>
-                        downloadJsonFile(animation.file, animation.name)
-                      }
-                    >
-                      Download
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
+          <AnimationDetail />
         </div>
       </div>
     </>

@@ -9,6 +9,7 @@ type CreateAnimationState = {
 };
 
 type AnimationState = {
+  animation: Animation | null;
   animations: Animation[];
   sort: string;
   search: string;
@@ -16,6 +17,7 @@ type AnimationState = {
 };
 
 const initialState: AnimationState = {
+  animation: null,
   animations: [],
   sort: '',
   search: '',
@@ -43,8 +45,11 @@ export const animation = createSlice({
     setCreateAnimation: (state, action) => {
       state.createAnimation = action.payload;
     },
+    setAnimation: (state, action) => {
+      state.animation = action.payload;
+    },
   },
 });
 
-export const { setAnimations, setSort, setSearch, setCreateAnimation } = animation.actions;
+export const { setAnimations, setSort, setSearch, setCreateAnimation, setAnimation } = animation.actions;
 export default animation.reducer;
