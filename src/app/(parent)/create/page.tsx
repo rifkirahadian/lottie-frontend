@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { LottieAnimation } from '@/components/animations';
@@ -7,14 +6,17 @@ import { CREATE_FILE_MUTATION } from '@/services/graphql';
 import { validateLottieJson } from '@/validates';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../lib/store';
+import { setCreateAnimation } from '../../../../lib/features/animations/animationSlice';
 
 export default function List() {
   const router = useRouter();
-  const [animationData, setAnimationData] = useState<any>(null);
-  const [filename, setFilename] = useState<string | null>(null);
-  const [filesize, setFilesize] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const createAnimation = useSelector((state: RootState) => state.animationReducer.createAnimation);
+  const { animationData, filename, filesize, error } = createAnimation;
+  const dispatch = useDispatch<AppDispatch>();
+
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [createFile] = useMutation(CREATE_FILE_MUTATION);
 
@@ -30,15 +32,23 @@ export default function List() {
 
             const isLottie = validateLottieJson(data);
             if (!isLottie) {
-              setError('Invalid Lottie Animation');
+              dispatch(setCreateAnimation({
+                ...createAnimation,
+                error: 'Invalid Lottie Animation'
+              }));
               return;
             }
-            setError(null);
-            setAnimationData(data);
-            setFilename(file.name);
-            setFilesize(file.size);
+            dispatch(setCreateAnimation({
+              animationData: JSON.stringify(data),
+              filename: file.name,
+              filesize: file.size,
+              error: null
+            }));
           } catch (error) {
-            setError('Invalid Lottie Animation');
+            dispatch(setCreateAnimation({
+              ...createAnimation,
+              error: 'Invalid Lottie Animation'
+            }));
           }
         };
         reader.readAsText(file);
@@ -48,11 +58,16 @@ export default function List() {
 
   const onCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!animationData) {
+      alert('Please choose file first');
+      return;
+    }
+
     await createFile({
       variables: {
         createFileInput: {
           name: filename,
-          file: JSON.stringify(animationData),
+          file: animationData,
           size: filesize,
         },
       },
@@ -76,11 +91,14 @@ export default function List() {
             )}
             {animationData && (
               <div className='relative mt-4 flex h-64 w-full items-center justify-center'>
-                <LottieAnimation animationData={animationData} />
+                <LottieAnimation animationData={JSON.parse(animationData)} />
                 <div className='absolute bottom-4 flex space-x-2'>
                   <button
                     className='btn btn-danger'
-                    onClick={() => setAnimationData(null)}
+                    onClick={() => dispatch(setCreateAnimation({
+                      ...createAnimation,
+                      animationData: null,
+                    }))}
                   >
                     Remove
                   </button>

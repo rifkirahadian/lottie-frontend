@@ -1,16 +1,30 @@
 import { Animation } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
+type CreateAnimationState = {
+  animationData: string | null;
+  filesize: string | null;
+  filename: string | null;
+  error: string | null
+};
+
 type AnimationState = {
   animations: Animation[];
   sort: string;
   search: string;
+  createAnimation: CreateAnimationState
 };
 
 const initialState: AnimationState = {
   animations: [],
   sort: '',
-  search: ''
+  search: '',
+  createAnimation: {
+    animationData: null,
+    filesize: null,
+    filename: null,
+    error: null,
+  }
 };
 
 export const animation = createSlice({
@@ -26,8 +40,11 @@ export const animation = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+    setCreateAnimation: (state, action) => {
+      state.createAnimation = action.payload;
+    },
   },
 });
 
-export const { setAnimations, setSort, setSearch } = animation.actions;
+export const { setAnimations, setSort, setSearch, setCreateAnimation } = animation.actions;
 export default animation.reducer;

@@ -11,8 +11,8 @@ import { setAnimations } from '../../../../lib/features/animations/animationSlic
 
 export default function List() {
   const dispatch = useDispatch<AppDispatch>();
-  const { sort, search } = useSelector((state: RootState) => state.animationReducer);
-  const { loading, data, error } = useQuery(FIND_ALL_FILES_QUERY(search, sort));
+  const { sort, search, animations } = useSelector((state: RootState) => state.animationReducer);
+  const { loading, data, error, refetch } = useQuery(FIND_ALL_FILES_QUERY(search, sort));
 
   const loadOfflineAnimations = async() => {
     const offlineAnimations = await getAllAnimations();
@@ -33,6 +33,12 @@ export default function List() {
       loadOfflineAnimations();
     }
   }, [error]);
+
+  useEffect(() => {
+    if (animations.length > 0) {
+      refetch();
+    }
+  }, []);
 
   return (
     <>
