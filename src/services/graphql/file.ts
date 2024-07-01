@@ -27,7 +27,6 @@ export const FIND_ALL_FILES_QUERY = (search: string | null = null, sort: string 
         name
         size
         createdAt
-        updatedAt
       }
     }
   `;
