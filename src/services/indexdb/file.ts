@@ -16,3 +16,8 @@ export async function saveAnimation(animation: Animation) {
   const db = await dbPromise;
   return db.put('animations', animation);
 }
+
+export async function getAnimationById(id: string) {
+  const db = await dbPromise;
+  return db.get('animations', id);
+}

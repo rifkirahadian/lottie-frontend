@@ -6,39 +6,60 @@ import { Animation } from '@/types';
 import { downloadJsonFile } from '@/utils';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getAnimationById, saveAnimation } from '@/services/indexdb';
 
 export default function Preview() {
   const { id } = useParams();
-  const { loading, data } = useQuery<{ findOne: Animation }>(
-    FIND_ONE_FILE_QUERY(id)
-  );
+  const [animation, setAnimation] = useState<Animation | null>(null);
+  const { loading, data, error } = useQuery<{ findOne: Animation }>(FIND_ONE_FILE_QUERY(id));
+
+  const loadOfflineAnimation = async() => {
+    const offlineAnimation = await getAnimationById(id.toString());
+    if (offlineAnimation) {
+      setAnimation(offlineAnimation);
+    }
+  }
+  
+  useEffect(() => {
+    if (error) {
+      loadOfflineAnimation();
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data && !loading) {
+      setAnimation(data.findOne);
+      saveAnimation(data.findOne); // Save to IndexedDB
+    }
+  }, [data, loading]);
 
   return (
     <>
       <div className='container mx-auto px-4 text-black'>
         <h1 className='mb-3 mt-3'>Animation Detail</h1>
         <div className='h-screen w-full'>
-          {!loading && data && (
+          {animation && (
             <div className='grid grid-cols-3 gap-4'>
               <div>
                 <LottieAnimation
-                  animationData={JSON.parse(data.findOne.file)}
+                  animationData={JSON.parse(animation.file)}
                 />
               </div>
               <div>
                 <ul className='font-medium rounded-lg border-gray-200 text-sm'>
                   <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
-                    {data?.findOne.name}
+                    {animation.name}
                   </li>
-                  <li className='w-full border-b border-gray-200 px-4 py-2'>{`${data ? Math.ceil(data?.findOne.size / 1024) : 0} KB`}</li>
+                  <li className='w-full border-b border-gray-200 px-4 py-2'>{`${Math.ceil(animation.size / 1024)} KB`}</li>
                   <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
-                    {data?.findOne.createdAt}
+                    {animation.createdAt}
                   </li>
                   <li className='w-full rounded-t-lg border-b border-gray-200 px-4 py-2'>
                     <button
                       className='btn btn-primary'
                       onClick={() =>
-                        downloadJsonFile(data.findOne.file, data.findOne.name)
+                        downloadJsonFile(animation.file, animation.name)
                       }
                     >
                       Download

@@ -3,26 +3,27 @@
 import { AnimationList, AnimationSearch, AnimationSort } from '@/components/animations';
 import { FIND_ALL_FILES_QUERY } from '@/services/graphql';
 import { useQuery } from '@apollo/client';
-import { ChangeEventHandler, FormEvent, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getAllAnimations, saveAnimation } from '@/services/indexdb';
-import { Animation } from '@/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../lib/store';
+import { setAnimations } from '../../../../lib/features/animations/animationSlice';
 
 export default function List() {
-  const [search, setSearch] = useState<string>('');
-  const [sort, setSort] = useState<string>('');
-  const [animations, setAnimations] = useState<Animation[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { sort, search } = useSelector((state: RootState) => state.animationReducer);
   const { loading, data, error } = useQuery(FIND_ALL_FILES_QUERY(search, sort));
 
   const loadOfflineAnimations = async() => {
     const offlineAnimations = await getAllAnimations();
     if (offlineAnimations.length > 0) {
-      setAnimations(offlineAnimations);
+      dispatch(setAnimations(offlineAnimations));
     }
   }
 
   useEffect(() => {
     if (data) {
-      setAnimations(data.findAll);
+      dispatch(setAnimations(data.findAll));
       data.findAll.forEach(saveAnimation);
     }
   }, [data]);
@@ -33,34 +34,23 @@ export default function List() {
     }
   }, [error]);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const searchInput = form.elements.namedItem('search') as HTMLInputElement;
-    setSearch(searchInput.value);
-  };
-
-  const handleSortChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    setSort(e.target.value);
-  };
-
   return (
     <>
       <div className='container mx-auto px-4 text-black'>
         <h1 className='mb-3 mt-3'>Animation List</h1>
         <div className='h-screen w-full'>
-          {!loading && animations && (
+          {!loading && (
             <>
               <div className="grid grid-rows-1 grid-flow-col gap-4">
                 <div>
-                  <AnimationSearch onSubmit={onSubmit} />
+                  <AnimationSearch />
                 </div>
                 <div>
-                  <AnimationSort value={sort} onChange={handleSortChange} />
+                  <AnimationSort />
                 </div>
               </div>
 
-              <AnimationList data={animations} />
+              <AnimationList />
             </>
           )}
         </div>

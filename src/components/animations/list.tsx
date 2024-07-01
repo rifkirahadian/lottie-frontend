@@ -1,8 +1,11 @@
-import { Animation } from '@/types';
 import Link from 'next/link';
 import { FaEye } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../lib/store';
 
-export const AnimationList = ({ data }: { data: Animation[] }) => {
+export const AnimationList = () => {
+  const data = useSelector((state: RootState) => state.animationReducer.animations);
+
   return (
     <div className='relative overflow-x-auto'>
       <table className='table-default'>

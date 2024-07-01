@@ -1,10 +1,18 @@
-import { FormEventHandler } from 'react';
+import { FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../lib/store';
+import { setSearch } from '../../../lib/features/animations/animationSlice';
 
-export const AnimationSearch = ({
-  onSubmit,
-}: {
-  onSubmit: FormEventHandler<HTMLFormElement> | undefined;
-}) => {
+export const AnimationSearch = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const searchInput = form.elements.namedItem('search') as HTMLInputElement;
+    dispatch(setSearch(searchInput.value));
+  };
+
   return (
     <form className='mx-auto max-w-md' method='post' onSubmit={onSubmit}>
       <label

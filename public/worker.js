@@ -1,5 +1,4 @@
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing.');
   event.waitUntil(
     caches.open('my-cache').then((cache) => {
       return cache.addAll([
@@ -13,9 +12,23 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+  const { request } = event;
+  if (request.url.includes('/graphql') || request.url.includes('/animations/')) {
+    event.respondWith(
+      caches.match(request).then((response) => {
+        return response || fetch(request).then((fetchResponse) => {
+          return caches.open('my-cache').then((cache) => {
+            cache.put(request, fetchResponse.clone());
+            return fetchResponse;
+          });
+        });
+      })
+    );
+  } else {
+    event.respondWith(
+      caches.match(request).then((response) => {
+        return response || fetch(request);
+      })
+    );
+  }
 });
