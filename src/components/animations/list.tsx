@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FaEye } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../lib/store';
+import { RootState } from '@/stores/store';
 
 export const AnimationList = () => {
   const data = useSelector((state: RootState) => state.animationReducer.animations);

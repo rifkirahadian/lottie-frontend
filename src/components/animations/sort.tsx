@@ -1,7 +1,7 @@
 import { ChangeEventHandler } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../lib/store";
-import { setSort } from "../../../lib/features/animations/animationSlice";
+import { AppDispatch, RootState } from "@/stores/store";
+import { setSort } from "@/stores/features/animations/animationSlice";
 
 export const AnimationSort = () => {
   const sort = useSelector((state: RootState) => state.animationReducer.sort);

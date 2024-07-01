@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../lib/store';
-import { setSearch } from '../../../lib/features/animations/animationSlice';
+import { AppDispatch } from '@/stores/store';
+import { setSearch } from '@/stores/features/animations/animationSlice';
 
 export const AnimationSearch = () => {
   const dispatch = useDispatch<AppDispatch>();

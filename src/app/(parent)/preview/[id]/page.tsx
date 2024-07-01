@@ -8,8 +8,8 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { getAnimationById, saveAnimation } from '@/services/indexdb';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../../lib/store';
-import { setAnimation } from '../../../../../lib/features/animations/animationSlice';
+import { setAnimation } from '@/stores/features/animations/animationSlice';
+import { AppDispatch } from '@/stores/store';
 
 export default function Preview() {
   const { id } = useParams();

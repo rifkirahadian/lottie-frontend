@@ -6,8 +6,8 @@ import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { getAllAnimations, saveAnimation } from '@/services/indexdb';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../../lib/store';
-import { setAnimations } from '../../../../lib/features/animations/animationSlice';
+import { AppDispatch, RootState } from '@/stores/store';
+import { setAnimations } from '@/stores/features/animations/animationSlice';
 
 export default function List() {
   const dispatch = useDispatch<AppDispatch>();

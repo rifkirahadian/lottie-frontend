@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import animationReducer from './features/animations/animationSlice';
+import animationReducer from '@/stores/features/animations/animationSlice';
 
 export const makeStore = () => {
   return configureStore({

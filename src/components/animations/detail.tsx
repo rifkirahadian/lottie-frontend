@@ -1,7 +1,7 @@
 import { downloadJsonFile } from "@/utils";
 import { LottieAnimation } from "./lottie";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store";
+import { RootState } from "@/stores/store";
 
 export const AnimationDetail = () => {
   const animation = useSelector((state: RootState) => state.animationReducer.animation);

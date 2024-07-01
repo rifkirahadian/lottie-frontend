@@ -8,8 +8,8 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../../lib/store';
-import { setCreateAnimation } from '../../../../lib/features/animations/animationSlice';
+import { AppDispatch, RootState } from '@/stores/store';
+import { setCreateAnimation } from '@/stores/features/animations/animationSlice';
 
 export default function List() {
   const router = useRouter();
