@@ -10,14 +10,19 @@ export const CREATE_FILE_MUTATION = gql`
   }
 `;
 
-export const FIND_ALL_FILES_QUERY = (search: string | null = null) => {
-  let searchParam: string = '';
+export const FIND_ALL_FILES_QUERY = (search: string | null = null, sort: string | null = null) => {
+  const params: string[] = [];
   if (search) {
-    searchParam = `(search: "${search}")`;
+    params.push(`search: "${search}"`);
   }
+
+  if (sort) {
+    params.push(`sort: "${sort}"`);
+  }
+
   return gql`
     query {
-      findAll${searchParam} {
+      findAll${params.length > 0 ? `(${params.join(',')})` : ''} {
         id
         name
         size

@@ -1,18 +1,23 @@
 'use client';
 
-import { AnimationList, AnimationSearch } from '@/components/animations';
+import { AnimationList, AnimationSearch, AnimationSort } from '@/components/animations';
 import { FIND_ALL_FILES_QUERY } from '@/services/graphql';
 import { useQuery } from '@apollo/client';
-import { FormEvent, useState } from 'react';
+import { ChangeEventHandler, FormEvent, useState } from 'react';
 
 export default function List() {
   const [search, setSearch] = useState<string>('');
-  const { loading, data } = useQuery(FIND_ALL_FILES_QUERY(search));
+  const [sort, setSort] = useState<string>('');
+  const { loading, data } = useQuery(FIND_ALL_FILES_QUERY(search, sort));
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const searchInput = form.elements.namedItem('search') as HTMLInputElement;
     setSearch(searchInput.value);
+  };
+
+  const handleSortChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    setSort(e.target.value);
   };
 
   return (
@@ -22,7 +27,15 @@ export default function List() {
         <div className='h-screen w-full'>
           {!loading && data && (
             <>
-              <AnimationSearch onSubmit={onSubmit} />
+              <div className="grid grid-rows-1 grid-flow-col gap-4">
+                <div>
+                  <AnimationSearch onSubmit={onSubmit} />
+                </div>
+                <div>
+                  <AnimationSort value={sort} onChange={handleSortChange} />
+                </div>
+              </div>
+              
               <AnimationList data={data.findAll} />
             </>
           )}
