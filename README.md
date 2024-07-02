@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 This project is small React application that enables users to search and preview, upload and download Lottie Animations.The application provide robust offline capabilities, allowing users to interact with animations and access detailed metadata even when no internet connection is available
 
 ### Technology Used
-● Apollo Client GraphQL for API development.
+- Apollo Client GraphQL for API development.
 - Service Workers for offline support
 - State Management Library (Redux)
 - IndexedDB local caching
