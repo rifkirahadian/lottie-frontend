@@ -1,5 +1,25 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Project Overview
+This project is small React application that enables users to search and preview, upload and download Lottie Animations.The application provide robust offline capabilities, allowing users to interact with animations and access detailed metadata even when no internet connection is available
+
+# Technology Used
+● Apollo Client GraphQL for API development.
+● Service Workers for offline support
+● State Management Library (Redux)
+● IndexedDB local caching
+● PWA
+
+# Pages 
+● List of Animations
+● Create New Animation
+● Detail of animation
+
+# Offline Support
+● Service Worker -> Service workers act as a proxy between the network and the browser, allowing for the interception of network requests, caching responses, and delivering those cached responses when the network is unavailable
+● IndexedDB -> IndexedDB provides a way to store large amounts of structured data, including files and blobs, which can be accessed offline. This way only happen if the APIs cannot be accessed.
+
+
 ## Getting Started
 
 First, run the development server:
